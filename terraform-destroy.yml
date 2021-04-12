@@ -1,0 +1,9 @@
+---
+- hosts: all
+  gather_facts: no
+  become: true
+  tasks:
+  - name: connect to terraform and execute plan
+    terraform:
+      project_path: /home/ec2-user/terraform-windows
+      state: absent
