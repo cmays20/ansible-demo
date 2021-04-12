@@ -5,4 +5,4 @@
   tasks:
   - name: connect to terraform and execute plan
     terraform:
-      project_path: /home/ec2-user/terraform-windows
+      project_path: {{ terraform_dir }}
