@@ -7,3 +7,5 @@
     terraform:
       project_path: "{{ terraform_dir }}/linux"
       state: absent
+      variables:
+        public_key: "{{ public_key }}"
