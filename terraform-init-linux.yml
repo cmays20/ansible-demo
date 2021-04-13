@@ -10,5 +10,6 @@
   - name: connect to terraform and execute plan
     terraform:
       project_path: "{{ terraform_dir }}/linux"
+      force_init: true
       variables:
         public_key: "{{ public_key }}"
