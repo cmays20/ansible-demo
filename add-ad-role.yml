@@ -15,7 +15,7 @@
    - name: install domain
      win_domain: >
        dns_domain_name=rhansibledemo.com
-       safe_mode_password={{ ansible_password }}     
+       safe_mode_password="{{ ansible_password }}"     
      register: ad
    - name: reboot server
      win_reboot:
