@@ -3,6 +3,10 @@
   gather_facts: no
   become: true
   tasks:
+  - name: Get Terraform from github
+    ansible.builtin.git:
+      repo: git@github.com:cmays20/terraform-demo.git
+      dest: {{ terraform_dir }}
   - name: connect to terraform and execute plan
     terraform:
       project_path: "{{ terraform_dir }}"
