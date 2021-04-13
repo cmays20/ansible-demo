@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: no
+  become: true
+  tasks:
+  - name: connect to terraform and execute plan
+    terraform:
+      project_path: "{{ terraform_dir }}/{{ terraform_folder }}"
+      state: absent
+      variables:
+        public_key: "{{ public_key }}"
+        win_username: "{{ win_username }}"
+        win_password: "{{ win_password }}"
