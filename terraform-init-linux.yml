@@ -6,7 +6,9 @@
   - name: Get Terraform from github
     ansible.builtin.git:
       repo: git@github.com:cmays20/terraform-demo.git
-      dest: {{ terraform_dir }}
+      dest: "{{ terraform_dir }}"
   - name: connect to terraform and execute plan
     terraform:
       project_path: "{{ terraform_dir }}"
+      variables:
+        public_key: "{{ public_key }}"
