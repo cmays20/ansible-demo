@@ -5,6 +5,7 @@
   tasks:
   - name: Get Terraform from github
     ansible.builtin.git:
+      bare: yes
       repo: git@github.com:cmays20/terraform-demo.git
       dest: "{{ terraform_dir }}"
   - name: connect to terraform and execute plan
