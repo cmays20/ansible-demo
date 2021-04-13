@@ -5,7 +5,7 @@
   tasks:
   - name: connect to terraform and execute plan
     terraform:
-      project_path: "{{ terraform_dir }}/linux"
+      project_path: "{{ terraform_dir }}/{{ terraform_folder }}"
       state: absent
       variables:
         public_key: "{{ public_key }}"
