@@ -9,5 +9,5 @@
       state: absent
       variables:
         public_key: "{{ public_key }}"
-        win_username: "{{ ansible_username }}"
-        win_password: "{{ ansible_password }}"
+        win_username: "{{ win_username }}"
+        win_password: "{{ win_password }}"
