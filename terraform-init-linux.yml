@@ -6,7 +6,7 @@
   - name: Get Terraform from github
     ansible.builtin.git:
       bare: yes
-      repo: git@github.com:cmays20/terraform-demo.git
+      repo: https://github.com/cmays20/terraform-demo
       dest: "{{ terraform_dir }}"
   - name: connect to terraform and execute plan
     terraform:
