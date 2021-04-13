@@ -9,6 +9,6 @@
       dest: "{{ terraform_dir }}"
   - name: connect to terraform and execute plan
     terraform:
-      project_path: "{{ terraform_dir }}"
+      project_path: "{{ terraform_dir }}/linux"
       variables:
         public_key: "{{ public_key }}"
