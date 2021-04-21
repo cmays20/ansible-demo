@@ -1,0 +1,16 @@
+- name: install first domain controller
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Wait 300 seconds for server to come up
+      wait_for_connection:
+        timeout: 300
+    - name: Gather facts for first time
+      setup:
+    - name: Install IIS (Web-Server only)
+      ansible.windows.win_feature:
+        name: Web-Server
+        state: present
+    - name: Reboot if installing Web-Server feature requires it
+      ansible.windows.win_reboot:
+      when: win_feature.reboot_required
