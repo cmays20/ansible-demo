@@ -1,24 +1,27 @@
 ---
-- hosts: all
-  tasks:
 - name: install first domain controller
   hosts: all
-  gather_facts: yes
+  gather_facts: no
   tasks:
-   - name: install ad
-     win_feature: >
+    - name: Wait 300 seconds for server to come up
+      wait_for_connection:
+        timeout: 300
+    - name: Gather facts for first time
+      setup:
+    - name: install ad
+      win_feature: >
           name=AD-Domain-Services
           include_management_tools=yes
           include_sub_features=yes
           state=present
-     register: result
-   - name: install domain
-     win_domain: >
-       dns_domain_name=rhansibledemo.com
-       safe_mode_password="{{ ansible_password }}"     
-     register: ad
-   - name: reboot server
-     win_reboot:
-      msg: "Installing AD. Rebooting..."
-      pre_reboot_delay: 20
-     when: ad.changed
+      register: result
+    - name: install domain
+      win_domain: >
+        dns_domain_name=rhansibledemo.com
+        safe_mode_password="{{ ansible_password }}"     
+      register: ad
+    - name: reboot server
+      win_reboot:
+        msg: "Installing AD. Rebooting..."
+        pre_reboot_delay: 20
+      when: ad.changed
