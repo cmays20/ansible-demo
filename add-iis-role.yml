@@ -1,4 +1,5 @@
-- name: install first domain controller
+---
+- name: install iis
   hosts: all
   gather_facts: no
   tasks:
