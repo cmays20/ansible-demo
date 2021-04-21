@@ -14,9 +14,9 @@
           include_management_tools=yes
           include_sub_features=yes
           state=present
-      register: result
+      register: iis
     - name: reboot server
       win_reboot:
         msg: "Installing AD. Rebooting..."
         pre_reboot_delay: 20
-      when: ad.changed
+      when: iis.changed
