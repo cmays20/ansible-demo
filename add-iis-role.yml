@@ -9,9 +9,12 @@
     - name: Gather facts for first time
       setup:
     - name: Install IIS (Web-Server only)
-      ansible.windows.win_feature:
-        name: Web-Server
-        state: present
+      win_feature: >
+          name=Web-Server
+          include_management_tools=yes
+          include_sub_features=yes
+          state=present
+      register: result
     - name: Reboot if installing Web-Server feature requires it
       ansible.windows.win_reboot:
       when: win_feature.reboot_required
