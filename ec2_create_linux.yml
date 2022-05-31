@@ -36,7 +36,7 @@
         key_name: mays_keypair
         group: linux_httpd
         instance_type: t2.micro
-        image: ami-03d64741867e7bb94
+        image_id: ami-03d64741867e7bb94
         wait: yes
         wait_timeout: 500
         tags:
