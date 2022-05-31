@@ -8,3 +8,5 @@
         name: mays_keypair
         key_material: "{{ key_material }}"
         force: false
+      environment: 
+        AWS_REGION: "{{ AWS_REGION }}"
