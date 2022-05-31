@@ -32,19 +32,19 @@
       environment: 
         AWS_REGION: "{{ AWS_REGION }}"  
     - name: create ec2 instance
-      amazon.aws.ec2:
+      amazon.aws.ec2_instance:
         key_name: mays_keypair
         group: linux_httpd
         instance_type: t2.micro
         image: ami-03d64741867e7bb94
         wait: yes
         wait_timeout: 500
-        instance_tags:
+        tags:
            Name: RHEL-HTTPD
            owner: cmays
            AF_DEMO_ROLE: httpd
            DemoID: cmays
-        monitoring: yes
-        assign_public_ip: yes
+        network:
+          assign_public_ip: yes
       environment: 
         AWS_REGION: "{{ AWS_REGION }}"
