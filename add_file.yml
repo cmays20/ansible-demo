@@ -1,0 +1,12 @@
+---
+- name: Create hello world file
+  hosts: all
+  gather_facts: no
+  vars:
+    variable_to_be_replaced: 'Hello world'
+    inline_variable: 'hello again'
+  tasks:
+    - name: Template a file
+      ansible.builtin.template:
+        src: hello_world.j2
+        dest: /opt/hello_world.txt
