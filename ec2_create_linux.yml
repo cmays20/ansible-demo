@@ -10,3 +10,39 @@
         force: false
       environment: 
         AWS_REGION: "{{ AWS_REGION }}"
+    - name: create linux_httpd group
+      amazon.aws.ec2_group:
+        name: linux_httpd
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+        rules_egress:
+          - proto: "-1"
+            from_port: 0
+            to_port: 0
+            cidr_ip: 0.0.0.0/0
+      environment: 
+        AWS_REGION: "{{ AWS_REGION }}"  
+    - name: create ec2 instance
+      amazon.aws.ec2:
+        key_name: mays_keypair
+        group: linux_httpd
+        instance_type: t2.micro
+        image: ami-03d64741867e7bb94
+        wait: yes
+        wait_timeout: 500
+        instance_tags:
+           Name: RHEL-HTTPD
+           owner: cmays
+           AF_DEMO_ROLE: httpd
+           DemoID: cmays
+        monitoring: yes
+        assign_public_ip: yes
+      environment: 
+        AWS_REGION: "{{ AWS_REGION }}"
