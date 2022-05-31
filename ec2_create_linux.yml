@@ -34,6 +34,7 @@
     - name: create ec2 instance
       amazon.aws.ec2_instance:
         key_name: mays_keypair
+        vpc_subnet_id: "{{ vpc_subnet_id }}"
         security_group: linux_httpd
         instance_type: t2.micro
         image_id: ami-03d64741867e7bb94
