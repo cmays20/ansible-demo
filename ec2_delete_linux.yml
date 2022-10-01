@@ -9,12 +9,6 @@
         state: absent
       environment: 
         AWS_REGION: "{{ AWS_REGION }}"
-    - name: create linux_httpd group
-      amazon.aws.ec2_group:
-        name: linux_httpd
-        state: absent
-      environment: 
-        AWS_REGION: "{{ AWS_REGION }}"  
     - name: create ec2 instance
       amazon.aws.ec2_instance:
         tags:
@@ -22,6 +16,12 @@
            owner: cmays
            AF_DEMO_ROLE: httpd
            DemoID: cmays
+        state: absent
+      environment: 
+        AWS_REGION: "{{ AWS_REGION }}"
+    - name: create linux_httpd group
+      amazon.aws.ec2_group:
+        name: linux_httpd
         state: absent
       environment: 
         AWS_REGION: "{{ AWS_REGION }}"
