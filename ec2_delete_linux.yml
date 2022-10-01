@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  gather_facts: no
+  become: false
+  tasks:
+    - name: create key pair using provided key_material
+      amazon.aws.ec2_key:
+        name: mays_keypair
+        state: absent
+      environment: 
+        AWS_REGION: "{{ AWS_REGION }}"
+    - name: create linux_httpd group
+      amazon.aws.ec2_group:
+        name: linux_httpd
+        state: absent
+      environment: 
+        AWS_REGION: "{{ AWS_REGION }}"  
+    - name: create ec2 instance
+      amazon.aws.ec2_instance:
+        tags:
+           Name: RHEL-HTTPD
+           owner: cmays
+           AF_DEMO_ROLE: httpd
+           DemoID: cmays
+        state: absent
+      environment: 
+        AWS_REGION: "{{ AWS_REGION }}"
