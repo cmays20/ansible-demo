@@ -11,11 +11,8 @@
         AWS_REGION: "{{ AWS_REGION }}"
     - name: create ec2 instance
       amazon.aws.ec2_instance:
-        tags:
-           Name: RHEL-HTTPD
-           owner: cmays
-           AF_DEMO_ROLE: httpd
-           DemoID: cmays
+        filters:
+          tag:Name: RHEL-HTTPD
         state: absent
       environment: 
         AWS_REGION: "{{ AWS_REGION }}"
