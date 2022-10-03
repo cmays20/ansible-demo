@@ -34,9 +34,9 @@
         wait: yes
         wait_timeout: 500
         tags:
-           Name: WINDOWS_IIS
+           Name: WINDOWS_AD
            owner: cmays
-           AF_DEMO_ROLE: iis
+           AF_DEMO_ROLE: ad
            DemoID: cmays
         network:
           assign_public_ip: yes
