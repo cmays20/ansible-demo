@@ -1,0 +1,71 @@
+---
+- hosts: localhost
+  gather_facts: no
+  become: false
+  tasks:
+    - name: create windows_ad group
+      amazon.aws.ec2_group:
+        name: windows_ad
+        description: sg for ad
+        vpc_id: "{{ vpc_id }}"
+        rules:
+          - proto: tcp
+            from_port: 3389
+            to_port: 3389
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 5985
+            to_port: 5986
+            cidr_ip: 0.0.0.0/0
+        rules_egress:
+          - proto: "-1"
+            from_port: 0
+            to_port: 0
+            cidr_ip: 0.0.0.0/0
+      environment: 
+        AWS_REGION: "{{ AWS_REGION }}"  
+    - name: create ec2 instance
+      amazon.aws.ec2_instance:
+        key_name: mays_keypair
+        vpc_subnet_id: "{{ vpc_subnet_id }}"
+        security_group: windows_ad
+        instance_type: t2.micro
+        image_id: ami-00d1b5cc1e5341681
+        wait: yes
+        wait_timeout: 500
+        tags:
+           Name: WINDOWS_IIS
+           owner: cmays
+           AF_DEMO_ROLE: iis
+           DemoID: cmays
+        network:
+          assign_public_ip: yes
+        user_data: |
+          <powershell>
+            Set-Item -Path WSMan:\localhost\Service\Auth\Certificate -Value $true
+            Set-Item -Path WSMan:\localhost\Service\Auth\Basic -Value $true
+            Set-Item -Path WSMan:\localhost\Service\AllowUnencrypted -Value $true
+            netsh advfirewall firewall add rule name="WinRM in" protocol=TCP dir=in profile=any localport=5985 remoteip=any localip=any action=allow
+            $testUserAccountName = '${var.win_username}'
+            $testUserAccountPassword = (ConvertTo-SecureString -String '${var.win_password}' -AsPlainText -Force)
+            if (-not (Get-LocalUser -Name $testUserAccountName -ErrorAction Ignore)) {
+              $newUserParams = @{
+                Name                 = $testUserAccountName
+                AccountNeverExpires  = $true
+                PasswordNeverExpires = $true
+                Password             = $testUserAccountPassword
+              }
+              $null = New-LocalUser @newUserParams
+            }
+            $newItemParams = @{
+              Path         = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+              Name         = 'LocalAccountTokenFilterPolicy'
+              Value        = 1
+              PropertyType = 'DWORD'
+              Force        = $true
+            }
+            $null = New-ItemProperty @newItemParams
+            Get-LocalUser -Name $testUserAccountName | Add-LocalGroupMember -Group 'Administrators'
+          </powershell>
+      environment: 
+        AWS_REGION: "{{ AWS_REGION }}"
