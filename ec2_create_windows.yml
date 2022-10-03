@@ -66,6 +66,7 @@
             }
             $null = New-ItemProperty @newItemParams
             Get-LocalUser -Name $testUserAccountName | Add-LocalGroupMember -Group 'Administrators'
+            Get-LocalUser -Name $testUserAccountName | Add-LocalGroupMember -Group 'Remote Desktop Users'
           </powershell>
       environment: 
         AWS_REGION: "{{ AWS_REGION }}"
