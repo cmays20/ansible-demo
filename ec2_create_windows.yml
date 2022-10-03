@@ -30,7 +30,7 @@
         vpc_subnet_id: "{{ vpc_subnet_id }}"
         security_group: windows_ad
         instance_type: t2.micro
-        image_id: ami-00d1b5cc1e5341681
+        image_id: ami-0321c04d7f279eb63
         wait: yes
         wait_timeout: 500
         tags:
