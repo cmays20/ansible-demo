@@ -3,12 +3,6 @@
   gather_facts: no
   become: false
   tasks:
-    - name: delete key pair using provided key_material
-      amazon.aws.ec2_key:
-        name: mays_keypair
-        state: absent
-      environment: 
-        AWS_REGION: "{{ AWS_REGION }}"
     - name: delete ec2 instance
       amazon.aws.ec2_instance:
         filters:
