@@ -42,3 +42,6 @@
           assign_public_ip: yes
       environment: 
         AWS_REGION: "{{ AWS_REGION }}"
+    - name: Pause for 30 seconds to let EC2 come up
+      ansible.builtin.pause:
+        seconds: 30
