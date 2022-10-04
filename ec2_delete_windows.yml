@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  gather_facts: no
+  become: false
+  tasks:
+    - name: delete ec2 instance
+      amazon.aws.ec2_instance:
+        filters:
+          tag:Name: WINDOWS_AD
+        state: absent
+      environment: 
+        AWS_REGION: "{{ AWS_REGION }}"
+    - name: delete linux_httpd group
+      amazon.aws.ec2_group:
+        name: windows_ad
+        state: absent
+      environment: 
+        AWS_REGION: "{{ AWS_REGION }}"
